@@ -51,23 +51,19 @@
 # The header. This is for TURL, because it uses XPath.
 Name, URL, Method, Parameters, ResponseCode, XPath, Text, Encoded, xpath1, xpath2
 
-# Just load the homepage
-Homepage, "${host}/pebble/",GET,,200,id('blogName'),"Pebble Test Suite",false,,
+# load the homepage
+#Homepage,"${host}/",GET,,200,/html/body/div/div[2]/form/fieldset/legend,"Login",false,,
 
-# Just log on
-Login,"${host}/pebble/j_acegi_security_check",POST,"redirectUrl=%2F&j_username=username&j_password=password",200,"id('sidebar')/div[@class='sidebarItem']/div[@class='sidebarItemTitle']/span","Logged in as username",true,,
+# log on
+Login,"${host}/users/login",POST,"data[User][username]=bla@de.de&data[User][password]=egal",200,,,false,,
 
 # Goto to new article creation, verify existence of xpath, content is not needed, fill xpath1 and xpath2 with data for later use
-NewArticle,"${host}/pebble/addBlogEntry.secureaction#form",GET,,200,"id('content')/div[@class='contentItem unpublished']",,false,//input[@name='entry']/@value,//input[@name='date']/@value
+Task,"${host}/tasks",GET,,200,/html/body/div/div[2]/form/fieldset/legend,"Arbeitszeit eintragen",true,,
 
 # Save article, pass the xpath1 and xpath2 into the request and at the same time, save the data as entry and date for later, just to demo it, we are not using this here.
-SaveArticle,"${host}/pebble/saveBlogEntry.secureaction#preview",POST,"attachmentSize=&attachmentType=&attachmentUrl=&body=<p>${DATA.getText(3,6,false)}</p>&commentsEnabled=true&date=${date = xpath2.getTextContent()}&entry=${entry = xpath1.getTextContent()}&excerpt=${DATA.getText(1, false)}&originalPermalink=&persistent=false&submit=Save&subtitle=Sub ${RANDOM.String(25)}&tags=&timeZone=Europe%2FLondon&title=${title = ""Title-"" + RANDOM.String(25)}&trackBacksEnabled=true",200,//input[@value='Publish'],,false,//form[@name='blogEntryForm']/input[@name='entry']/@value,
-
-# Publish
-Publish,"${host}/pebble/manageBlogEntry.secureaction",POST,"entry=${entry = xpath1.getTextContent()}&submit=Publish",200,,,false,//input[@name='entry']/@value,
-
-# Confirm with as-is option 
-ConfirmPublish,"${host}/pebble/publishBlogEntry.secureaction",POST,"date=${date}&entry=${xpath1.getTextContent()}&publishDate=as-is&submit=Publish",200,//h1,${title},false,,
+#StartTask,"${host}/tasks",POST,"&data%5BTask%5D%5Bclient_id%5D=1&data%5BTask%5D%5Bdescription%5D=${RANDOM.String(25)}&data%5BTask%5D%5Bproxy_id%5D=&x=72&y=42",200,,,true,,
 
 # Logout, GET does not need the parameters, it can be part of the url already
-Logout,"${host}/pebble/logout.action?redirectUrl=${host}/pebble/",GET,,200,id('loginForm'),,false,,
+#Logout,"${host}/logout",GET,,200,,,false,,
+
+#Homepage,"${host}/",GET,,200,/html/body/div/div[2]/form/fieldset/legend,"Login",false,,
