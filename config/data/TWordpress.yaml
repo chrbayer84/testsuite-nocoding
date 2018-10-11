@@ -1,0 +1,16 @@
+- Action:
+    Name: Homepage
+    Request:
+        Url: ${host}/bona/
+- Action:
+    Name: porchfest
+    Request:
+        Url: ${host}/bona/2018/04/10/porchfest-2018/
+- Action:
+    Name: Homepage
+    Request:
+        Url: ${host}/bona/wp-content/uploads/sites/2/2018/04/IMG_2316.jpg
+- Action:
+    Name: Homepage
+    Request:
+        Url: ${host}/bona/2015/05/17/who-are-the-birds-of-north-america/
